@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Maintainer>
+  <Icon>https://raw.githubusercontent.com/yusseiin/unraid-templates/main/img/avatar.jpg</Icon>
+  <Profile>
+    I create Docker applications with one main goal: making life easier for the user. My containers are designed to work out of the box, stay up to date automatically, and require as little manual setup as possible—so you can focus on using the app, not maintaining it.
+  </Profile>
+  <DonateLink>https://www.paypal.com/paypalme/yusseiin</DonateLink>
+  <DonateText>If you like my work please consider Donating.</DonateText>
+</Maintainer>
