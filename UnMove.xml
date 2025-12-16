@@ -12,7 +12,7 @@
   <Category>MediaApp:Other</Category>
   <WebUI>http://[IP]:[PORT:3213]</WebUI>
   <TemplateURL/>
-  <Icon>https://raw.githubusercontent.com/yusseiin/unmove/main/public/icon.png</Icon>
+  <Icon>https://raw.githubusercontent.com/yusseiin/unraid-templates/main/img/unmove.png</Icon>
   <ExtraParams/>
   <PostArgs/>
   <CPUset/>
