@@ -6,7 +6,7 @@
   <Network>bridge</Network>
   <Shell>sh</Shell>
   <Privileged>false</Privileged>
-  <Support>https://github.com/yusseiin/unmove</Support>
+  <Support>https://forums.unraid.net/topic/195792-support-yusseiin-unmove</Support>
   <Project>https://github.com/yusseiin/unmove</Project>
   <Overview>File transfer application with TVDB integration for organizing media files. Identify TV series and movies, rename them properly, and move them to your media library.&#xD;
 &#xD;
