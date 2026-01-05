@@ -14,13 +14,12 @@ This template uses a single /data mount for INSTANT file moves (no copy+delete).
 &#xD;
 NOTE: Instant moves only work if downloads and media are on the SAME physical disk. If they are on different disks, the app will automatically fall back to copy+delete. To guarantee instant moves, mount a specific disk (e.g., /mnt/disk1) instead of /mnt/user.</Overview>
   <Category>MediaApp:Other</Category>
-  <WebUI>http://[IP]:[PORT:3213]</WebUI>
+  <WebUI>http://[IP]:[PORT:3000]</WebUI>
   <TemplateURL/>
   <Icon>https://raw.githubusercontent.com/yusseiin/unraid-templates/main/img/unmove.png</Icon>
   <ExtraParams/>
   <PostArgs/>
   <CPUset/>
-  <DateInstalled/>
   <DonateText/>
   <DonateLink/>
   <Requires/>
