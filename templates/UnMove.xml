@@ -8,7 +8,7 @@
   <Privileged>false</Privileged>
   <Support>https://forums.unraid.net/topic/195792-support-yusseiin-unmove</Support>
   <Project>https://github.com/yusseiin/unmove</Project>
-  <Overview>File transfer application with TVDB integration for organizing media files. Identify TV series and movies, rename them properly, and move them to your media library.&#xD;
+  <Overview>File transfer application with TVDB/TMDB integration for organizing media files. Identify TV series and movies, rename them properly, and move them to your media library.&#xD;
 &#xD;
 This template uses a single /data mount for INSTANT file moves (no copy+delete). Your downloads and media folders should be subdirectories of the Data Path.&#xD;
 &#xD;
