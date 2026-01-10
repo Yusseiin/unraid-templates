@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>Weight-Tracker</Name>
+  <Repository>yusseiin/weighttracker:latest</Repository>
+  <Registry>https://hub.docker.com/r/yusseiin/weighttracker</Registry>
+  <Network>bridge</Network>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/yusseiin/weighttracker/issues</Support>
+  <Project>https://github.com/yusseiin/weighttracker</Project>
+  <Overview>A self-hosted mobile-first weight tracking application. Log your daily weight, track water consumption, monitor activity type and sleep quality, and visualize your progress with interactive charts.&#xD;
+&#xD;
+Features:&#xD;
+- Weight tracking with activity type and sleep quality&#xD;
+- Water consumption tracking&#xD;
+- Interactive progress charts with time filters&#xD;
+- Multi-user support with admin and user roles&#xD;
+- Customizable date formats and chart colors&#xD;
+- Customizable activity&#xD;
+</Overview>
+  <Beta>False</Beta>
+  <Category>Tools: Other:</Category>
+  <Date>2026-01-05</Date>
+  <WebUI>http://[IP]:[PORT:3000]</WebUI>
+  <TemplateURL/>
+  <Icon>https://raw.githubusercontent.com/yusseiin/unraid-templates/main/img/weighttracker.png</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <DonateText/>
+  <DonateLink/>
+  <Requires/>
+  <Config Name="WebUI Port" Target="3000" Default="3000" Mode="tcp" Description="Web interface port" Type="Port" Display="always" Required="true" Mask="false">3000</Config>
+  <Config Name="Config Path" Target="/config" Default="/mnt/user/appdata/weighttracker" Mode="rw" Description="Path to store application data (users, weight entries, settings)" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/weighttracker</Config>
+  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="User ID for file permissions (99 = nobody on Unraid)" Type="Variable" Display="advanced" Required="false" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="Group ID for file permissions (100 = users on Unraid)" Type="Variable" Display="advanced" Required="false" Mask="false">100</Config>
+</Container>
