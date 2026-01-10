@@ -6,7 +6,7 @@
   <Network>bridge</Network>
   <Shell>sh</Shell>
   <Privileged>false</Privileged>
-  <Support>https://github.com/yusseiin/weighttracker/issues</Support>
+  <Support>https://forums.unraid.net/topic/196403-support-yusseiin-weight-tracker/</Support>
   <Project>https://github.com/yusseiin/weighttracker</Project>
   <Overview>A self-hosted mobile-first weight tracking application. Log your daily weight, track water consumption, monitor activity type and sleep quality, and visualize your progress with interactive charts.&#xD;
 &#xD;
