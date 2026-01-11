@@ -34,4 +34,5 @@ Features:&#xD;
   <Config Name="Config Path" Target="/config" Default="/mnt/user/appdata/weighttracker" Mode="rw" Description="Path to store application data (users, weight entries, settings)" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/weighttracker</Config>
   <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="User ID for file permissions (99 = nobody on Unraid)" Type="Variable" Display="advanced" Required="false" Mask="false">99</Config>
   <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="Group ID for file permissions (100 = users on Unraid)" Type="Variable" Display="advanced" Required="false" Mask="false">100</Config>
+  <Config Name="API_KEY" Target="API_KEY" Default="" Mode="" Description="Secret key for API authentication. Enables Home Assistant integration. Use X-API-User header to specify user. Generate with: openssl rand -hex 32" Type="Variable" Display="advanced" Required="false" Mask="true"></Config>
 </Container>
