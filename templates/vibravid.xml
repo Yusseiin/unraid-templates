@@ -19,7 +19,7 @@
     <Category>MediaApp:Video Downloaders:</Category>
     <WebUI>http://[IP]:[PORT:8000]</WebUI>
     <TemplateURL />
-    <Icon />
+    <Icon>https://raw.githubusercontent.com/yusseiin/unraid-templates/main/img/vibravid.png</Icon>
     <ExtraParams>-v vibravid_gui:/app/GUI -v vibravid_conf:/app/Conf</ExtraParams>
     <PostArgs />
     <CPUset />
