@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>ezBookkeeping</Name>
+  <Repository>mayswind/ezbookkeeping:latest</Repository>
+  <Registry>https://hub.docker.com/r/mayswind/ezbookkeeping</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/mayswind/ezbookkeeping/issues</Support>
+  <Project>https://github.com/mayswind/ezbookkeeping</Project>
+  <Overview>ezBookkeeping is a lightweight, self-hosted personal finance / bookkeeping app with a modern responsive web UI and PWA support. Supports multi-currency, transaction categories, accounts, statistics and charts, import/export, and 2FA.&#xD;
+&#xD;
+Defaults to SQLite stored under /ezbookkeeping/data. For MySQL/PostgreSQL set the EBK_DATABASE_* variables (any ezbookkeeping.ini option can be overridden via an EBK_SECTION_OPTION environment variable).&#xD;
+&#xD;
+The container runs as UID/GID 1000:1000, so the host appdata folder must be owned by 1000:1000. Before first start, open the Unraid terminal and run:&#xD;
+&#xD;
+mkdir -p /mnt/user/appdata/ezbookkeeping/{data,storage,log,conf}&#xD;
+chown -R 1000:1000 /mnt/user/appdata/ezbookkeeping&#xD;
+&#xD;
+If you change the host paths in this template, run chown -R 1000:1000 against those paths instead.</Overview>
+  <Beta>False</Beta>
+  <Category>Productivity: Tools:</Category>
+  <WebUI>http://[IP]:[PORT:8080]</WebUI>
+  <TemplateURL/>
+  <Icon>https://raw.githubusercontent.com/yusseiin/unraid-templates/main/img/ezbookkeeping.png</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <DateInstalled/>
+  <DonateText/>
+  <DonateLink/>
+  <Requires/>
+  <Config Name="WebUI Port" Target="8080" Default="8080" Mode="tcp" Description="HTTP port for the ezBookkeeping web interface." Type="Port" Display="always" Required="true" Mask="false">8080</Config>
+  <Config Name="Data" Target="/ezbookkeeping/data" Default="/mnt/user/appdata/ezbookkeeping/data" Mode="rw" Description="Persistent data directory. Holds the SQLite database when using the default database backend." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/ezbookkeeping/data</Config>
+  <Config Name="Storage" Target="/ezbookkeeping/storage" Default="/mnt/user/appdata/ezbookkeeping/storage" Mode="rw" Description="Object storage for user uploads (avatars, transaction pictures, etc.)." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/ezbookkeeping/storage</Config>
+  <Config Name="Logs" Target="/ezbookkeeping/log" Default="/mnt/user/appdata/ezbookkeeping/log" Mode="rw" Description="Application log directory." Type="Path" Display="advanced" Required="false" Mask="false">/mnt/user/appdata/ezbookkeeping/log</Config>
+  <Config Name="Config" Target="/ezbookkeeping/conf" Default="" Mode="rw" Description="Optional. Mount a folder containing a custom ezbookkeeping.ini to override the built-in config. Leave blank to use defaults plus EBK_* environment variables." Type="Path" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Security Secret Key" Target="EBK_SECURITY_SECRET_KEY" Default="" Mode="" Description="Random string used to encrypt sensitive user data. CHANGE this to a long random string before first start (e.g. openssl rand -hex 32). Changing it later will invalidate existing tokens/2FA secrets." Type="Variable" Display="always" Required="true" Mask="true">change-me-to-a-long-random-string</Config>
+  <Config Name="Server Domain" Target="EBK_SERVER_DOMAIN" Default="" Mode="" Description="The domain or IP used to reach the WebUI (e.g. ezbookkeeping.example.com or 192.168.1.50). Used to build correct URLs in emails and the PWA." Type="Variable" Display="always" Required="true" Mask="false"/>
+  <Config Name="Database Type" Target="EBK_DATABASE_TYPE" Default="sqlite3" Mode="" Description="Database backend: sqlite3 (default, no extra setup), mysql, or postgres. When set to mysql/postgres, also fill in the Database Host/Name/User/Password fields below." Type="Variable" Display="advanced" Required="false" Mask="false">sqlite3</Config>
+  <Config Name="Database Host" Target="EBK_DATABASE_HOST" Default="" Mode="" Description="Only used when Database Type is mysql or postgres. host:port of the database server — e.g. mariadb:3306 if you run MariaDB as a separate Unraid container on the bridge network." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Database Name" Target="EBK_DATABASE_NAME" Default="" Mode="" Description="Only used when Database Type is mysql or postgres. Name of the database to use (must already exist on the DB server)." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Database User" Target="EBK_DATABASE_USER" Default="" Mode="" Description="Only used when Database Type is mysql or postgres. Username with full privileges on the database above." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Database Password" Target="EBK_DATABASE_PASSWD" Default="" Mode="" Description="Only used when Database Type is mysql or postgres. Password for the database user." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="Log Mode" Target="EBK_LOG_MODE" Default="" Mode="" Description="Optional. Log output mode: console, file, or console,file. Leave blank for the image default." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+</Container>
