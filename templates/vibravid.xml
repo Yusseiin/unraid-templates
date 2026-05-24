@@ -31,7 +31,7 @@ BACKUPS:
   <Category>MediaApp:Video Downloaders:</Category>
   <WebUI>http://[IP]:[PORT:8000]</WebUI>
   <TemplateURL/>
-  <Icon/>
+<Icon>https://raw.githubusercontent.com/yusseiin/unraid-templates/main/img/vibravid.png</Icon>
   <ExtraParams/>
   <PostArgs/>
   <CPUset/>
