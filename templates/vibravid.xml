@@ -1,59 +1,52 @@
 <?xml version="1.0"?>
 <Container version="2">
-    <Name>VibraVid</Name>
-    <Repository>ghcr.io/astraelabs/vibravid:latest</Repository>
-    <Registry>https://github.com/AstraeLabs/VibraVid/pkgs/container/vibravid</Registry>
-    <Network>bridge</Network>
-    <MyIP />
-    <Shell>bash</Shell>
-    <Privileged>false</Privileged>
-    <Support>https://github.com/AstraeLabs/VibraVid/issues</Support>
-    <Project>https://github.com/AstraeLabs/VibraVid</Project>
-    <Overview>VibraVid - Web UI for managing video downloads. The database (/app/GUI) and config
-        (/app/Conf) live in Docker named volumes (vibravid_gui, vibravid_conf) because those
-        container paths also contain image-shipped source code that bind mounts would shadow.
-        Downloads and logs use normal bind mounts to /mnt/user. NOTE: the container runs as UID
-        1000, so the Downloads and Logs host paths must be writable by UID 1000 (chown -R 1000:1000
-        those folders before first start). Named volumes inherit the correct ownership from the
-        image automatically.</Overview>
-    <Category>MediaApp:Video Downloaders:</Category>
-    <WebUI>http://[IP]:[PORT:8000]</WebUI>
-    <TemplateURL />
-    <Icon>
-        
-    </Icon>
-    <ExtraParams>-v vibravid_gui:/app/GUI -v vibravid_conf:/app/Conf</ExtraParams>
-    <PostArgs />
-    <CPUset />
-    <DateInstalled />
-    <DonateText />
-    <DonateLink />
-    <Requires />
-    <Config Name="WebUI Port" Target="8000" Default="8000" Mode="tcp"
-        Description="HTTP port for the VibraVid web interface." Type="Port" Display="always"
-        Required="true" Mask="false">8000</Config>
-    <Config Name="Downloads" Target="/app/Video" Default="/mnt/user/downloads/vibravid" Mode="rw"
-        Description="Where downloaded videos are stored." Type="Path" Display="always"
-        Required="true" Mask="false">/mnt/user/downloads/vibravid</Config>
-    <Config Name="Logs" Target="/app/logs" Default="/mnt/user/appdata/vibravid/logs" Mode="rw"
-        Description="Application logs." Type="Path" Display="advanced" Required="false" Mask="false">
-        /mnt/user/appdata/vibravid/logs</Config>
-    <Config Name="Django Secret Key" Target="DJANGO_SECRET_KEY" Default="" Mode=""
-        Description="Secret key for Django sessions/CSRF. CHANGE this to a long random string before exposing the app."
-        Type="Variable" Display="always" Required="true" Mask="true">change-me-to-a-secure-key</Config>
-    <Config Name="Allowed Hosts" Target="ALLOWED_HOSTS" Default="localhost,127.0.0.1" Mode=""
-        Description="Comma-separated hostnames/IPs allowed to reach the app. Add your Unraid IP, e.g. localhost,127.0.0.1,192.168.1.50"
-        Type="Variable" Display="always" Required="true" Mask="false">localhost,127.0.0.1</Config>
-    <Config Name="CSRF Trusted Origins" Target="CSRF_TRUSTED_ORIGINS"
-        Default="http://localhost:8000,http://127.0.0.1:8000" Mode=""
-        Description="Comma-separated origins trusted for CSRF. Must include the exact scheme://host:port you use to reach the WebUI."
-        Type="Variable" Display="always" Required="true" Mask="false">
-        http://localhost:8000,http://127.0.0.1:8000</Config>
-    <Config Name="Django Debug" Target="DJANGO_DEBUG" Default="false" Mode=""
-        Description="Enable Django debug mode. Leave false for normal use." Type="Variable"
-        Display="advanced" Required="false" Mask="false">false</Config>
-    <Config Name="Watchlist Auto-Download Interval" Target="WATCHLIST_AUTO_INTERVAL_SECONDS"
-        Default="" Mode=""
-        Description="Optional. Interval in seconds between watchlist auto-downloads (e.g. 14400 for 4 hours). Leave blank to disable."
-        Type="Variable" Display="advanced" Required="false" Mask="false" />
+  <Name>VibraVid</Name>
+  <Repository>ghcr.io/astraelabs/vibravid:latest</Repository>
+  <Registry>https://github.com/AstraeLabs/VibraVid/pkgs/container/vibravid</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/AstraeLabs/VibraVid/issues</Support>
+  <Project>https://github.com/AstraeLabs/VibraVid</Project>
+  <Overview>VibraVid - Web UI for managing video downloads.
+
+IMPORTANT: run the one-time setup script BELOW before first start, otherwise the container will crash. The Django source code and the SQLite database share the same directory in the upstream image (/app/GUI), so we cannot bind-mount that directory - we bind-mount only the db.sqlite3 file. The Conf directory holds only data files and is mounted normally.
+
+ONE-TIME SETUP (run on Unraid CLI before first start):
+
+  mkdir -p /mnt/user/appdata/vibravid/Conf /mnt/user/appdata/vibravid/logs /mnt/user/downloads/vibravid
+  docker pull ghcr.io/astraelabs/vibravid:latest
+  docker create --name vv-seed ghcr.io/astraelabs/vibravid:latest
+  docker cp vv-seed:/app/Conf/config.json /mnt/user/appdata/vibravid/Conf/config.json
+  docker cp vv-seed:/app/Conf/login.json  /mnt/user/appdata/vibravid/Conf/login.json
+  docker rm vv-seed
+  touch /mnt/user/appdata/vibravid/db.sqlite3
+  chown -R 1000:1000 /mnt/user/appdata/vibravid /mnt/user/downloads/vibravid
+
+CAVEAT: SQLite writes a transient journal file alongside db.sqlite3 during transactions. Because only the .sqlite3 file is bind-mounted (not its parent dir), the journal lives in the container's ephemeral layer. A hard kill mid-write could in theory leave the database in an inconsistent state. Avoid "Force Stop" and back up /mnt/user/appdata/vibravid/db.sqlite3 periodically.
+
+BACKUPS:
+  cp /mnt/user/appdata/vibravid/db.sqlite3 /mnt/user/backups/vibravid-db-$(date +%F).sqlite3</Overview>
+  <Category>MediaApp:Video Downloaders:</Category>
+  <WebUI>http://[IP]:[PORT:8000]</WebUI>
+  <TemplateURL/>
+  <Icon/>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <DateInstalled/>
+  <DonateText/>
+  <DonateLink/>
+  <Requires/>
+  <Config Name="WebUI Port" Target="8000" Default="8000" Mode="tcp" Description="HTTP port for the VibraVid web interface." Type="Port" Display="always" Required="true" Mask="false">8000</Config>
+  <Config Name="Downloads" Target="/app/Video" Default="/mnt/user/downloads/vibravid" Mode="rw" Description="Where downloaded videos are stored." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/downloads/vibravid</Config>
+  <Config Name="Config dir" Target="/app/Conf" Default="/mnt/user/appdata/vibravid/Conf" Mode="rw" Description="Holds config.json and login.json. Must be pre-seeded by the one-time setup script (see Overview)." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/vibravid/Conf</Config>
+  <Config Name="Database file" Target="/app/GUI/db.sqlite3" Default="/mnt/user/appdata/vibravid/db.sqlite3" Mode="rw" Description="SQLite database FILE (not a directory). Must exist on the host before first start - the setup script touches an empty file that Django will populate via migrate." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/vibravid/db.sqlite3</Config>
+  <Config Name="Logs" Target="/app/logs" Default="/mnt/user/appdata/vibravid/logs" Mode="rw" Description="Application logs." Type="Path" Display="advanced" Required="false" Mask="false">/mnt/user/appdata/vibravid/logs</Config>
+  <Config Name="Django Secret Key" Target="DJANGO_SECRET_KEY" Default="" Mode="" Description="Secret key for Django sessions/CSRF. CHANGE this to a long random string before exposing the app." Type="Variable" Display="always" Required="true" Mask="true">change-me-to-a-secure-key</Config>
+  <Config Name="Allowed Hosts" Target="ALLOWED_HOSTS" Default="localhost,127.0.0.1" Mode="" Description="Comma-separated hostnames/IPs allowed to reach the app. Add your Unraid IP, e.g. localhost,127.0.0.1,192.168.1.50" Type="Variable" Display="always" Required="true" Mask="false">localhost,127.0.0.1</Config>
+  <Config Name="CSRF Trusted Origins" Target="CSRF_TRUSTED_ORIGINS" Default="http://localhost:8000,http://127.0.0.1:8000" Mode="" Description="Comma-separated origins trusted for CSRF. Must include the exact scheme://host:port you use to reach the WebUI." Type="Variable" Display="always" Required="true" Mask="false">http://localhost:8000,http://127.0.0.1:8000</Config>
+  <Config Name="Django Debug" Target="DJANGO_DEBUG" Default="false" Mode="" Description="Enable Django debug mode. Leave false for normal use." Type="Variable" Display="advanced" Required="false" Mask="false">false</Config>
+  <Config Name="Watchlist Auto-Download Interval" Target="WATCHLIST_AUTO_INTERVAL_SECONDS" Default="" Mode="" Description="Optional. Interval in seconds between watchlist auto-downloads (e.g. 14400 for 4 hours). Leave blank to disable." Type="Variable" Display="advanced" Required="false" Mask="false"/>
 </Container>
