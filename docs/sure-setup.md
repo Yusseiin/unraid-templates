@@ -110,6 +110,7 @@ Done! 🎉
 | **Encryption** keys (3 values) | Sure and Sure-Worker | Optional. Blank = derived from the Secret Key Base. If you set them: set **all three**, use the **same** values in both containers, set them **before** the first start and never change them. Generate each with `openssl rand -hex 32`. |
 | **Market Data Sync Timezone** | Sure and Sure-Worker | Same value in both. Values saved in Settings → Self-Hosting take precedence. |
 | **OpenAI** fields | Sure and Sure-Worker | Optional AI features. Works with OpenAI or any OpenAI-compatible API (e.g. Ollama). |
+| **Assistant Type** | Sure and Sure-Worker | Same value in both. Blank = each family picks in Settings → Self-Hosting. `builtin` = in-app chat. `external` = your own agent (needs `EXTERNAL_ASSISTANT_URL` / `EXTERNAL_ASSISTANT_TOKEN`). `mcp_only` = **no in-app AI chat at all** (sidebar, toggle and mobile tab hidden); MCP stays available and background categorization keeps working. See [discussion #203](https://github.com/we-promise/sure/discussions/203). |
 
 ## Updating
 
