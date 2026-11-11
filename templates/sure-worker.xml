@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>Sure-Worker</Name>
+  <Repository>ghcr.io/we-promise/sure:stable</Repository>
+  <Registry>https://github.com/we-promise/sure/pkgs/container/sure</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/we-promise/sure/issues</Support>
+  <Project>https://github.com/we-promise/sure</Project>
+  <Overview>Background worker (Sidekiq) for Sure, the self-hosted personal finance app. Install the main "Sure" template first.&#xD;
+&#xD;
+The worker runs bank syncs, CSV/PDF imports, daily market data, AI jobs and sends all emails (password resets, rule notifications). Without it, imports and syncs never complete.&#xD;
+&#xD;
+Use the SAME image tag, Secret Key Base, database settings, Redis URL and Storage path as the Sure container. Start it after Sure has finished its first boot (database migrations).&#xD;
+&#xD;
+SMTP settings only need to be set here: email is sent by the worker, not the web container. SMTP TLS Enabled must be exactly "true" for SMTPS (port 465); use "false" for STARTTLS on port 587.</Overview>
+  <Beta>False</Beta>
+  <Category>Productivity: Tools:</Category>
+  <WebUI/>
+  <TemplateURL/>
+  <Icon>https://raw.githubusercontent.com/yusseiin/unraid-templates/main/img/sure.png</Icon>
+  <ExtraParams/>
+  <PostArgs>bundle exec sidekiq</PostArgs>
+  <CPUset/>
+  <DateInstalled/>
+  <DonateText/>
+  <DonateLink/>
+  <Requires>The Sure container, PostgreSQL and Redis.</Requires>
+  <Config Name="Storage" Target="/rails/storage" Default="/mnt/user/appdata/sure/storage" Mode="rw" Description="Must be the same path used by the Sure container." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/sure/storage</Config>
+  <Config Name="Secret Key Base" Target="SECRET_KEY_BASE" Default="" Mode="" Description="Required. Must be identical to the value in the Sure container." Type="Variable" Display="always" Required="true" Mask="true"/>
+  <Config Name="Database Host" Target="DB_HOST" Default="" Mode="" Description="Same as the Sure container." Type="Variable" Display="always" Required="true" Mask="false"/>
+  <Config Name="Database Port" Target="DB_PORT" Default="5432" Mode="" Description="Same as the Sure container." Type="Variable" Display="always" Required="true" Mask="false">5432</Config>
+  <Config Name="Database Name" Target="POSTGRES_DB" Default="sure_production" Mode="" Description="Same as the Sure container." Type="Variable" Display="always" Required="true" Mask="false">sure_production</Config>
+  <Config Name="Database User" Target="POSTGRES_USER" Default="sure_user" Mode="" Description="Same as the Sure container." Type="Variable" Display="always" Required="true" Mask="false">sure_user</Config>
+  <Config Name="Database Password" Target="POSTGRES_PASSWORD" Default="" Mode="" Description="Same as the Sure container." Type="Variable" Display="always" Required="true" Mask="true"/>
+  <Config Name="Redis URL" Target="REDIS_URL" Default="redis://192.168.1.100:6379/1" Mode="" Description="Same as the Sure container." Type="Variable" Display="always" Required="true" Mask="false">redis://192.168.1.100:6379/1</Config>
+  <Config Name="App Domain" Target="APP_DOMAIN" Default="" Mode="" Description="Host name Sure is reached at (e.g. sure.example.com). Used to build links in emails." Type="Variable" Display="always" Required="false" Mask="false"/>
+  <Config Name="Self Hosted" Target="SELF_HOSTED" Default="true" Mode="" Description="Enables self-hosting features. Leave true." Type="Variable" Display="advanced" Required="true" Mask="false">true</Config>
+  <Config Name="Assume SSL" Target="RAILS_ASSUME_SSL" Default="false" Mode="" Description="Same as the Sure container." Type="Variable" Display="advanced" Required="true" Mask="false">false</Config>
+  <Config Name="Force SSL" Target="RAILS_FORCE_SSL" Default="false" Mode="" Description="Same as the Sure container." Type="Variable" Display="advanced" Required="true" Mask="false">false</Config>
+  <Config Name="Email Sender" Target="EMAIL_SENDER" Default="" Mode="" Description="Address emails are sent from (e.g. sure@example.com). Must be allowed by your SMTP server." Type="Variable" Display="always" Required="false" Mask="false"/>
+  <Config Name="SMTP Address" Target="SMTP_ADDRESS" Default="" Mode="" Description="SMTP server host name (e.g. smtp.example.com). Leave blank to disable email." Type="Variable" Display="always" Required="false" Mask="false"/>
+  <Config Name="SMTP Port" Target="SMTP_PORT" Default="465" Mode="" Description="465 for SMTPS (TLS Enabled = true) or 587 for STARTTLS (TLS Enabled = false)." Type="Variable" Display="always" Required="false" Mask="false">465</Config>
+  <Config Name="SMTP Username" Target="SMTP_USERNAME" Default="" Mode="" Description="SMTP login user name." Type="Variable" Display="always" Required="false" Mask="false"/>
+  <Config Name="SMTP Password" Target="SMTP_PASSWORD" Default="" Mode="" Description="SMTP login password." Type="Variable" Display="always" Required="false" Mask="true"/>
+  <Config Name="SMTP TLS Enabled" Target="SMTP_TLS_ENABLED" Default="true" Mode="" Description="Exactly 'true' = TLS from the start (SMTPS, port 465). Anything else = STARTTLS when offered (port 587)." Type="Variable" Display="always" Required="false" Mask="false">true</Config>
+  <Config Name="SMTP TLS Skip Verify" Target="SMTP_TLS_SKIP_VERIFY" Default="false" Mode="" Description="Exactly 'true' disables SMTP certificate verification. Last resort only." Type="Variable" Display="advanced" Required="false" Mask="false">false</Config>
+  <Config Name="Exchange Rate Provider" Target="EXCHANGE_RATE_PROVIDER" Default="yahoo_finance" Mode="" Description="Same as the Sure container." Type="Variable" Display="advanced" Required="false" Mask="false">yahoo_finance</Config>
+  <Config Name="Securities Provider" Target="SECURITIES_PROVIDER" Default="yahoo_finance" Mode="" Description="Same as the Sure container." Type="Variable" Display="advanced" Required="false" Mask="false">yahoo_finance</Config>
+  <Config Name="Twelve Data API Key" Target="TWELVE_DATA_API_KEY" Default="" Mode="" Description="Same as the Sure container." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="Market Data Sync Timezone" Target="MARKET_DATA_SYNC_TIMEZONE" Default="UTC" Mode="" Description="IANA timezone for the daily price import (e.g. Europe/Rome). Settings page values take precedence." Type="Variable" Display="advanced" Required="false" Mask="false">UTC</Config>
+  <Config Name="Market Data Sync Time" Target="MARKET_DATA_SYNC_TIME" Default="22:00" Mode="" Description="HH:MM (24h) for the daily price import, Monday to Friday." Type="Variable" Display="advanced" Required="false" Mask="false">22:00</Config>
+  <Config Name="OpenAI Access Token" Target="OPENAI_ACCESS_TOKEN" Default="" Mode="" Description="Same as the Sure container (AI jobs run in the worker)." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="OpenAI Model" Target="OPENAI_MODEL" Default="" Mode="" Description="Same as the Sure container." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="OpenAI URI Base" Target="OPENAI_URI_BASE" Default="" Mode="" Description="Same as the Sure container." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+</Container>
