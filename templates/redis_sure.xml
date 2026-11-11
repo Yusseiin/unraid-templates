@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>redis_sure</Name>
+  <Repository>redis:latest</Repository>
+  <Registry>https://hub.docker.com/_/redis</Registry>
+  <Network>sure-net</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/Yusseiin/unraid-templates/issues</Support>
+  <Project>https://redis.io</Project>
+  <Overview>Redis for Sure, pre-configured to work with the Sure and Sure-Worker templates. Used for the background job queue (Sidekiq) and caching.&#xD;
+&#xD;
+Full step-by-step guide: https://github.com/Yusseiin/unraid-templates/blob/main/docs/sure-setup.md&#xD;
+&#xD;
+BEFORE INSTALLING, create the shared network once from the Unraid terminal (the container will not start without it):&#xD;
+&#xD;
+docker network create sure-net&#xD;
+&#xD;
+DO NOT RENAME this container: Sure and Sure-Worker connect to it as redis://redis_sure:6379/1. No port is exposed to your LAN; only containers on sure-net can reach it, so no password is needed.&#xD;
+&#xD;
+Install order: postgres17_sure, redis_sure, Sure, Sure-Worker.</Overview>
+  <Beta>False</Beta>
+  <Category>Productivity: Tools:</Category>
+  <WebUI/>
+  <TemplateURL/>
+  <Icon>https://cdn.jsdelivr.net/gh/selfhst/icons/png/redis.png</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <DateInstalled/>
+  <DonateText/>
+  <DonateLink/>
+  <Requires>The Docker network "sure-net" (create it with: docker network create sure-net).</Requires>
+  <Config Name="Data" Target="/data" Default="/mnt/user/appdata/redis_sure" Mode="rw" Description="Redis snapshot folder, so queued jobs survive restarts." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/redis_sure</Config>
+</Container>
