@@ -15,6 +15,8 @@ The worker runs bank syncs, CSV/PDF imports, daily market data, AI jobs and send
 &#xD;
 Use the SAME image tag, Secret Key Base, database settings, Redis URL and Storage path as the Sure container. Start it after Sure has finished its first boot (database migrations).&#xD;
 &#xD;
+RECOMMENDED: put this container on the same custom Docker network as PostgreSQL, Redis and Sure (e.g. "sure-net", created once with: docker network create sure-net) by setting Network Type to it, and use container names as hosts. See the Sure template for details.&#xD;
+&#xD;
 SMTP settings only need to be set here: email is sent by the worker, not the web container. SMTP TLS Enabled must be exactly "true" for SMTPS (port 465); use "false" for STARTTLS on port 587.</Overview>
   <Beta>False</Beta>
   <Category>Productivity: Tools:</Category>

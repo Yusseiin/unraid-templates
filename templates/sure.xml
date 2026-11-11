@@ -19,6 +19,12 @@ This is the WEB container. Sure needs FOUR containers to work:&#xD;
 &#xD;
 Start PostgreSQL and Redis first, then Sure, then Sure-Worker. Sure and Sure-Worker MUST use the same Secret Key Base, database and Redis settings, and the same Storage path.&#xD;
 &#xD;
+RECOMMENDED: put all 4 containers on the same custom Docker network so they can reach each other by container name and PostgreSQL/Redis do not need to expose ports to your LAN. Create it once from the Unraid terminal:&#xD;
+&#xD;
+docker network create sure-net&#xD;
+&#xD;
+Then set Network Type to "sure-net" in the PostgreSQL, Redis, Sure and Sure-Worker templates, and use the container names as hosts (e.g. Database Host = postgresql16, Redis URL = redis://redis:6379/1 - use your actual container names). Tip: if you change the Network Type of an existing container, enable "Preserve user defined networks" in Settings &gt; Docker so the network survives reboots and updates.&#xD;
+&#xD;
 The container runs as UID/GID 1000:1000. Before first start, open the Unraid terminal and run:&#xD;
 &#xD;
 mkdir -p /mnt/user/appdata/sure/storage&#xD;
@@ -42,12 +48,12 @@ After creating your first account (it becomes the super admin), restrict new sig
   <Config Name="WebUI Port" Target="3000" Default="3000" Mode="tcp" Description="HTTP port for the Sure web interface." Type="Port" Display="always" Required="true" Mask="false">3000</Config>
   <Config Name="Storage" Target="/rails/storage" Default="/mnt/user/appdata/sure/storage" Mode="rw" Description="Uploaded files (attachments, statements, imports/exports, logos). Must be the same path used by Sure-Worker. Owned by 1000:1000." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/sure/storage</Config>
   <Config Name="Secret Key Base" Target="SECRET_KEY_BASE" Default="" Mode="" Description="Required. Random secret used to encrypt data. Generate with: openssl rand -hex 64. Must be identical in Sure-Worker. Never change it after first start or encrypted data becomes unreadable." Type="Variable" Display="always" Required="true" Mask="true"/>
-  <Config Name="Database Host" Target="DB_HOST" Default="" Mode="" Description="IP or hostname of your PostgreSQL server (e.g. your Unraid IP, or the container name if on a custom Docker network)." Type="Variable" Display="always" Required="true" Mask="false"/>
+  <Config Name="Database Host" Target="DB_HOST" Default="" Mode="" Description="PostgreSQL host. On a custom Docker network (recommended): the PostgreSQL container name. Otherwise: your Unraid IP." Type="Variable" Display="always" Required="true" Mask="false"/>
   <Config Name="Database Port" Target="DB_PORT" Default="5432" Mode="" Description="PostgreSQL port." Type="Variable" Display="always" Required="true" Mask="false">5432</Config>
   <Config Name="Database Name" Target="POSTGRES_DB" Default="sure_production" Mode="" Description="PostgreSQL database name. It is created automatically if the user has permission." Type="Variable" Display="always" Required="true" Mask="false">sure_production</Config>
   <Config Name="Database User" Target="POSTGRES_USER" Default="sure_user" Mode="" Description="PostgreSQL user." Type="Variable" Display="always" Required="true" Mask="false">sure_user</Config>
   <Config Name="Database Password" Target="POSTGRES_PASSWORD" Default="" Mode="" Description="PostgreSQL password." Type="Variable" Display="always" Required="true" Mask="true"/>
-  <Config Name="Redis URL" Target="REDIS_URL" Default="redis://192.168.1.100:6379/1" Mode="" Description="Redis connection URL, e.g. redis://192.168.1.100:6379/1 (with password: redis://:password@host:6379/1)." Type="Variable" Display="always" Required="true" Mask="false">redis://192.168.1.100:6379/1</Config>
+  <Config Name="Redis URL" Target="REDIS_URL" Default="redis://192.168.1.100:6379/1" Mode="" Description="Redis connection URL. On a custom Docker network (recommended): redis://REDIS_CONTAINER_NAME:6379/1. Otherwise: redis://UNRAID_IP:6379/1. With password: redis://:password@host:6379/1." Type="Variable" Display="always" Required="true" Mask="false">redis://192.168.1.100:6379/1</Config>
   <Config Name="App Domain" Target="APP_DOMAIN" Default="" Mode="" Description="Host name Sure is reached at (e.g. sure.example.com). Used to build links in emails." Type="Variable" Display="always" Required="false" Mask="false"/>
   <Config Name="Assume SSL" Target="RAILS_ASSUME_SSL" Default="false" Mode="" Description="Set to true when Sure is served over HTTPS by a reverse proxy (e.g. SWAG, Nginx Proxy Manager, Cloudflare Tunnel)." Type="Variable" Display="always" Required="true" Mask="false">false</Config>
   <Config Name="Force SSL" Target="RAILS_FORCE_SSL" Default="false" Mode="" Description="Redirect all HTTP requests to HTTPS. Leave false when behind a reverse proxy." Type="Variable" Display="advanced" Required="true" Mask="false">false</Config>
