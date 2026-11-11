@@ -28,7 +28,7 @@ Major version upgrades (e.g. 17 to 18) are not automatic: keep the pg17 tag and 
   <Category>Productivity: Tools:</Category>
   <WebUI/>
   <TemplateURL/>
-  <Icon>https://cdn.jsdelivr.net/gh/selfhst/icons/png/postgresql.png</Icon>
+  <Icon>https://raw.githubusercontent.com/yusseiin/unraid-templates/main/img/postgres17_sure.png</Icon>
   <ExtraParams/>
   <PostArgs/>
   <CPUset/>

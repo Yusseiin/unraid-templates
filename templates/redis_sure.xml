@@ -24,7 +24,7 @@ Install order: postgres17_sure, redis_sure, Sure, Sure-Worker.</Overview>
   <Category>Productivity: Tools:</Category>
   <WebUI/>
   <TemplateURL/>
-  <Icon>https://cdn.jsdelivr.net/gh/selfhst/icons/png/redis.png</Icon>
+  <Icon>https://raw.githubusercontent.com/yusseiin/unraid-templates/main/img/redis_sure.png</Icon>
   <ExtraParams/>
   <PostArgs/>
   <CPUset/>
