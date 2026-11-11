@@ -108,9 +108,17 @@ Done! 🎉
 | **App Domain** | Sure and Sure-Worker | e.g. `sure.example.com`, used for links in emails. |
 | **SMTP** fields + **Email Sender** | Sure-Worker | Password resets and rule notifications. Port `465` with TLS Enabled `true`, or port `587` with TLS Enabled `false`. |
 | **Encryption** keys (3 values) | Sure and Sure-Worker | Optional. Blank = derived from the Secret Key Base. If you set them: set **all three**, use the **same** values in both containers, set them **before** the first start and never change them. Generate each with `openssl rand -hex 32`. |
-| **Market Data Sync Timezone** | Sure and Sure-Worker | Same value in both. Values saved in Settings → Self-Hosting take precedence. |
+| **Market Data Sync Timezone / Time / Enabled** | Sure and Sure-Worker | Same values in both. Daily price import, Monday to Friday. Enabled must be `1` (on) or `0` (off); blank counts as off. Values saved in Settings → Self-Hosting take precedence. |
 | **OpenAI** fields | Sure and Sure-Worker | Optional AI features. Works with OpenAI or any OpenAI-compatible API (e.g. Ollama). |
 | **Assistant Type** | Sure and Sure-Worker | Same value in both. Blank = each family picks in Settings → Self-Hosting. `builtin` = in-app chat. `external` = your own agent (needs `EXTERNAL_ASSISTANT_URL` / `EXTERNAL_ASSISTANT_TOKEN`). `mcp_only` = **no in-app AI chat at all** (sidebar, toggle and mobile tab hidden); MCP stays available and background categorization keeps working. See [discussion #203](https://github.com/we-promise/sure/discussions/203). |
+| **MCP API Token** + **MCP User Email** | Sure | Lets your own AI agent read your finances through `http://YOUR-UNRAID-IP:3000/mcp` with `Authorization: Bearer <token>`. Generate the token with `openssl rand -hex 32`; the email must belong to an existing Sure user. Pairs well with Assistant Type `mcp_only`. |
+| **External Assistant URL / Token / Model** | Sure and Sure-Worker | Only for Assistant Type `external`. |
+| **LLM Provider** + **Anthropic** fields | Sure and Sure-Worker | `openai` (default, also any OpenAI-compatible API) or `anthropic` (native Anthropic API key and model). |
+| **LLM Context Window / OpenAI Request Timeout / AI Response Timeout** | Sure and Sure-Worker | For local models such as Ollama. Blank = Sure's defaults (2048 tokens, 60 s, 90 s), which are sized for fast cloud models. For a local model try e.g. 8192 / 300 / 600. |
+| **Vector Store Provider** + **Embedding** fields | Sure and Sure-Worker | AI document search. `pgvector` stores it in `postgres17_sure` (pgvector is already included) and needs an embeddings endpoint, e.g. Ollama with `mxbai-embed-large` (1024 dimensions). Best set before Sure's first start. |
+| **Brandfetch Client ID** | Sure and Sure-Worker | Bank and merchant logos from [brandfetch.com](https://brandfetch.com). Set it in the template rather than on the Settings page. |
+| **OIDC** fields (4) | Sure | Single sign-on with Authentik, Authelia, Keycloak… All four are needed. Redirect URI: `https://YOUR-SURE-DOMAIN/auth/openid_connect/callback`. |
+| **Sidekiq Web Username / Password** | Sure | Optional extra login for the `/sidekiq` jobs page (already limited to the super admin). Set both. |
 
 ## Updating
 
